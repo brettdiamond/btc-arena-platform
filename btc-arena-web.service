@@ -1,0 +1,16 @@
+[Unit]
+Description=BTC Arena Web Dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/btc-arena-platform/web
+ExecStart=/usr/bin/python3 /opt/btc-arena-platform/web/app.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+Environment=FLASK_ENV=production
+
+[Install]
+WantedBy=multi-user.target
