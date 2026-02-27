@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BTC Arena Dashboard (DigitalOcean)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #0b1020; color: #f5f5f5; }
+        h1, h2 { color: #ffd166; }
+        .card { background: #151a2c; padding: 16px; margin-bottom: 16px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        th, td { padding: 8px; border-bottom: 1px solid #333; text-align: left; }
+        th { background: #202840; }
+        .small { font-size: 12px; color: #aaaaaa; }
+    </style>
+</head>
+<body>
+    <h1>BTC Arena Dashboard (DigitalOcean)</h1>
+    <div class="small">Last updated: {{ now }}</div>
+
+    <div class="card">
+        <h2>Overview</h2>
+        <p>Equity: <strong>${{ equity | round(2) }}</strong></p>
+        <p>Last BTC Price: <strong>${{ last_price | round(2) if last_price is not none else "?" }}</strong></p>
+        <p>Total Trades: <strong>{{ trade_count }}</strong></p>
+    </div>
+
+    <div class="card">
+        <h2>Recent Trades</h2>
+        {% if trades %}
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Portfolio</th>
+                <th>Side</th>
+                <th>Size</th>
+                <th>Price</th>
+            </tr>
+            {% for t in trades %}
+            <tr>
+                <td>{{ t.time }}</td>
+                <td>{{ t.portfolio }}</td>
+                <td>{{ t.side }}</td>
+                <td>{{ t.size }}</td>
+                <td>${{ t.price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No trades found yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>Optimizer Snapshot</h2>
+        {% if optimizer %}
+        <p>Elite ROI: <strong>{{ optimizer.elite_roi }}%</strong></p>
+        <p>Iterations: <strong>{{ optimizer.iterations }}</strong></p>
+        <p>Milestones: <strong>{{ optimizer.milestones }}</strong></p>
+        {% else %}
+        <p>No optimizer stats found yet. We can wire this up once we confirm the schema.</p>
+        {% endif %}
+    <
