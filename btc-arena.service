@@ -1,0 +1,15 @@
+[Unit]
+Description=BTC Arena Engine (Live Trading + Optimizer)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/btc-arena-platform/engine
+ExecStart=/usr/bin/python3 /opt/btc-arena-platform/engine/runner.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
